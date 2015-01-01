@@ -1,0 +1,26 @@
+@import "bootstrap";
+
+$gray: #eaeaea;
+
+body {
+  padding-top: 60px;
+  background-color: white;
+}
+
+.center {
+  text-align: center;
+}
+
+#logo {
+  color: white;
+  text-transform: uppercase;
+  padding-top: 9px;
+  font-weight: bold;
+  font-size: 1.7em;
+  margin-right: 10px;
+  float: left;
+  &:hover {
+    color: #0099CC;
+    text-decoration: none;
+  }
+}
