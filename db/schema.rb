@@ -11,7 +11,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150101163843) do
+ActiveRecord::Schema.define(version: 20150102062932) do
+
+  create_table "answers", force: true do |t|
+    t.integer  "question_id"
+    t.integer  "choice_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "choices", force: true do |t|
+    t.string   "statement"
+    t.integer  "question_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "quesions", force: true do |t|
+    t.string   "statement"
+    t.integer  "quiz_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "questions", force: true do |t|
+    t.string   "statement"
+    t.integer  "quiz_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "quizzes", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "name"
@@ -19,6 +53,7 @@ ActiveRecord::Schema.define(version: 20150101163843) do
     t.string   "password_digest"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_admin",        default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

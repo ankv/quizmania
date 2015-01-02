@@ -23,6 +23,7 @@ set helplang=en
 set hidden
 set hlsearch
 set ignorecase
+set iminsert=0
 set laststatus=2
 set mouse=a
 set pastetoggle=<F11>
@@ -41,7 +42,6 @@ set notimeout
 set ttimeout
 set ttimeoutlen=200
 set wildmenu
-set window=40
 let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
 let v:this_session=expand("<sfile>:p")
 silent only
@@ -50,24 +50,31 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +5 app/views/static_pages/home.html.erb
+badd +10 app/views/static_pages/home.html.erb
 badd +26 app/assets/stylesheets/custom.css.scss
 badd +22 ~/Documents/josh/sample_app/app/assets/stylesheets/custom.css.scss
 badd +7 app/views/layouts/_header.html.erb
 badd +10 app/views/layouts/application.html.erb
 badd +28 ~/Documents/josh/sample_app/app/views/layouts/_header.html.erb
 badd +3 app/models/user.rb
-badd +6 config/routes.rb
+badd +9 config/routes.rb
 badd +4 app/controllers/users_controller.rb
 badd +1 app/views/users/new.html.erb
 badd +4 db/migrate/20150101163843_add_index_to_users.rb
 badd +2 app/views/users/show.html.erb
 badd +10 app/views/sessions/new.html.erb
 badd +6 app/controllers/sessions_controller.rb
-badd +4 app/helpers/sessions_helper.rb
+badd +6 app/helpers/sessions_helper.rb
 badd +5 app/controllers/application_controller.rb
+badd +3 app/models/quiz.rb
+badd +2 app/models/choice.rb
+badd +2 app/models/answer.rb
+badd +1 app/models/question.rb
+badd +4 app/controllers/static_pages_controller.rb
+badd +9 app/controllers/quizzes_controller.rb
+badd +1 app/views/quizzes/edit.html.erb
 silent! argdel *
-edit app/views/layouts/application.html.erb
+edit app/views/quizzes/edit.html.erb
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -170,7 +177,7 @@ setlocal spellfile=
 setlocal spelllang=en
 setlocal statusline=
 setlocal suffixesadd=.rb
-setlocal swapfile
+setlocal noswapfile
 setlocal synmaxcol=3000
 if &syntax != 'eruby'
 setlocal syntax=eruby
@@ -185,12 +192,12 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 10 - ((9 * winheight(0) + 19) / 38)
+let s:l = 1 - ((0 * winheight(0) + 19) / 38)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-10
-normal! 0
+1
+normal! 041|
 tabnext 1
 if exists('s:wipebuf')
   silent exe 'bwipe ' . s:wipebuf
