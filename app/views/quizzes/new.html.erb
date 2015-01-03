@@ -1,4 +1,4 @@
-<h1 class="center">Edit Quiz <%= @quiz.id %> </h1>
+<h1 class="center">Create Quiz <%= @quiz.id %> </h1>
 <div class="row">
   <div class="col-md-10 col-md-offset-1">
     <%= form_for @quiz do |f| %>
@@ -17,10 +17,13 @@
         <% end %>
       </div>
       </div>
+
       <% end %>
+
       <div class="center">
-      <br><br><%= f.submit "Update", class: "btn btn-primary" %><br><br><br>
+      <br><br><%= f.submit "Create", class: "btn btn-primary" %><br><br><br>
       </div>
+
     <% end %>
   </div>
 </div>

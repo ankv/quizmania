@@ -1,12 +1,15 @@
 <div class="row">
   <div class="col-md-10 col-md-offset-1">
     <h1 class="center">Quizes Available</h1><br>
+    <% if current_user && current_user.is_admin? %>
+      <%= link_to "Create New", new_quiz_path, class: "btn btn-primary" %>
+    <% end %>
     <ol>
       <% @quiz.each do |q| %>
         <h2> <li><%= link_to q.name, '#' %> 
         <% if current_user && current_user.is_admin? %>
           <span style="float:right">
-          <%= link_to "Delete", "#", class: "btn btn-primary" %>
+          <%= link_to "Delete", quiz_path(q.id), method: :delete, class: "btn btn-primary" %>
           <%= link_to "Edit", edit_quiz_path(q.id), class: "btn btn-primary" %>
           </span>
         <% end %>

@@ -27,13 +27,6 @@ ActiveRecord::Schema.define(version: 20150102062932) do
     t.datetime "updated_at"
   end
 
-  create_table "quesions", force: true do |t|
-    t.string   "statement"
-    t.integer  "quiz_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "questions", force: true do |t|
     t.string   "statement"
     t.integer  "quiz_id"

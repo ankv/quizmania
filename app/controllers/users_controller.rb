@@ -1,11 +1,7 @@
 class UsersController < ApplicationController
 
   def show
-    if !current_user.eql?(nil) && current_user.id.eql?(params[:id].to_i)
-      @user = User.find(params[:id])
-    else
-      render :text => "Not for you"
-    end
+    @user = User.find(params[:id])
   end
 
   def new
