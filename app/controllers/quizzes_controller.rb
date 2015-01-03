@@ -2,7 +2,8 @@ class QuizzesController < ApplicationController
   before_action :should_be_admin
 
   def create
-    Quiz.create(quiz_params)
+    quiz = Quiz.new(quiz_params)
+    quiz.save
     redirect_to root_url
   end
 
@@ -35,7 +36,8 @@ class QuizzesController < ApplicationController
   private
 
   def quiz_params
-    params.require(:quiz).permit(:id, :name, questions_attributes: [:id, :quiz_id, :statement, choices_attributes: [:id, :question_id, :statement] ])
+    params.require(:quiz).permit(:id, :name, questions_attributes: [:id, :quiz_id, :statement,
+                                  :correct_choice_id, choices_attributes: [:id, :question_id, :statement] ])
   end
 
   def should_be_admin

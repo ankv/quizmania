@@ -11,14 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150102062932) do
-
-  create_table "answers", force: true do |t|
-    t.integer  "question_id"
-    t.integer  "choice_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(version: 20150103172343) do
 
   create_table "choices", force: true do |t|
     t.string   "statement"
@@ -32,6 +25,7 @@ ActiveRecord::Schema.define(version: 20150102062932) do
     t.integer  "quiz_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "correct_choice_id"
   end
 
   create_table "quizzes", force: true do |t|
