@@ -51,7 +51,7 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +5 app/views/static_pages/home.html.erb
+badd +9 app/views/static_pages/home.html.erb
 badd +26 app/assets/stylesheets/custom.css.scss
 badd +22 ~/Documents/josh/sample_app/app/assets/stylesheets/custom.css.scss
 badd +7 app/views/layouts/_header.html.erb
@@ -60,7 +60,7 @@ badd +28 ~/Documents/josh/sample_app/app/views/layouts/_header.html.erb
 badd +3 app/models/user.rb
 badd +9 config/routes.rb
 badd +12 app/controllers/users_controller.rb
-badd +1 app/views/users/new.html.erb
+badd +19 app/views/users/new.html.erb
 badd +4 db/migrate/20150101163843_add_index_to_users.rb
 badd +2 app/views/users/show.html.erb
 badd +10 app/views/sessions/new.html.erb
@@ -70,14 +70,16 @@ badd +5 app/controllers/application_controller.rb
 badd +3 app/models/quiz.rb
 badd +2 app/models/choice.rb
 badd +2 app/models/answer.rb
-badd +1 app/models/question.rb
+badd +2 app/models/question.rb
 badd +4 app/controllers/static_pages_controller.rb
-badd +6 app/controllers/quizzes_controller.rb
-badd +24 app/views/quizzes/edit.html.erb
-badd +5 app/views/quizzes/new.html.erb
+badd +1 app/controllers/quizzes_controller.rb
+badd +2 app/views/quizzes/edit.html.erb
+badd +2 app/views/quizzes/new.html.erb
 badd +1 Gemfile
+badd +11 db/seeds.rb
+badd +2 app/views/quizzes/_form.html.erb
 silent! argdel *
-edit Gemfile
+edit app/views/quizzes/_form.html.erb
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -107,7 +109,7 @@ setlocal cinoptions=
 setlocal cinwords=if,else,while,do,for,switch
 setlocal colorcolumn=
 setlocal comments=:#
-setlocal commentstring=#\ %s
+setlocal commentstring=<%#%s%>
 setlocal complete=.,w,b,u,t,i
 setlocal concealcursor=
 setlocal conceallevel=0
@@ -123,8 +125,8 @@ setlocal nodiff
 setlocal equalprg=
 setlocal errorformat=
 setlocal expandtab
-if &filetype != 'ruby'
-setlocal filetype=ruby
+if &filetype != 'eruby'
+setlocal filetype=eruby
 endif
 setlocal foldcolumn=0
 setlocal foldenable
@@ -144,8 +146,8 @@ setlocal iminsert=0
 setlocal imsearch=2
 setlocal include=^\\s*\\<\\(load\\>\\|require\\>\\|autoload\\s*:\\=[\"']\\=\\h\\w*[\"']\\=,\\)
 setlocal includeexpr=substitute(substitute(v:fname,'::','/','g'),'$','.rb','')
-setlocal indentexpr=GetRubyIndent(v:lnum)
-setlocal indentkeys=0{,0},0),0],!^F,o,O,e,=end,=else,=elsif,=when,=ensure,=rescue,==begin,==end
+setlocal indentexpr=GetErubyIndent()
+setlocal indentkeys=o,O,*<Return>,<>>,{,},0),0],o,O,!^F,=end,=else,=elsif,=rescue,=ensure,=when
 setlocal noinfercase
 setlocal iskeyword=@,48-57,_,192-255
 setlocal keywordprg=ri\ -T\ -f\ bs
@@ -153,7 +155,7 @@ setlocal nolinebreak
 setlocal nolisp
 setlocal nolist
 setlocal makeprg=
-setlocal matchpairs=(:),{:},[:]
+setlocal matchpairs=(:),{:},[:],<:>
 setlocal modeline
 setlocal modifiable
 setlocal nrformats=octal,hex
@@ -182,8 +184,8 @@ setlocal statusline=
 setlocal suffixesadd=.rb
 setlocal noswapfile
 setlocal synmaxcol=3000
-if &syntax != 'ruby'
-setlocal syntax=ruby
+if &syntax != 'eruby'
+setlocal syntax=eruby
 endif
 setlocal tabstop=8
 setlocal tags=./tags,./TAGS,tags,TAGS,~/.rvm/rubies/ruby-2.1.5/lib/ruby/site_ruby/2.1.0/tags,~/.rvm/rubies/ruby-2.1.5/lib/ruby/site_ruby/2.1.0/x86_64-linux/tags,~/.rvm/rubies/ruby-2.1.5/lib/ruby/site_ruby/tags,~/.rvm/rubies/ruby-2.1.5/lib/ruby/vendor_ruby/2.1.0/tags,~/.rvm/rubies/ruby-2.1.5/lib/ruby/vendor_ruby/2.1.0/x86_64-linux/tags,~/.rvm/rubies/ruby-2.1.5/lib/ruby/vendor_ruby/tags,~/.rvm/rubies/ruby-2.1.5/lib/ruby/2.1.0/tags,~/.rvm/rubies/ruby-2.1.5/lib/ruby/2.1.0/x86_64-linux/tags
@@ -195,12 +197,12 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 19 - ((18 * winheight(0) + 19) / 38)
+let s:l = 18 - ((17 * winheight(0) + 19) / 38)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-19
-normal! 012|
+18
+normal! 060|
 tabnext 1
 if exists('s:wipebuf')
   silent exe 'bwipe ' . s:wipebuf
