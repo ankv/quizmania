@@ -6,9 +6,13 @@
 %h2.center Tests Taken
 %table.table.table-hover
   %tr
+    %th #
     %th Quiz Name
     %th Score
-  - @user.tests.each do |test|
+  -cnt = 1
+  -@user.tests.each do |test|
     %tr
+      %td= cnt
       %td= test.quiz_name
       %td= test.score
+      -cnt+=1
