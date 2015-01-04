@@ -1,0 +1,23 @@
+.row
+  .col-md-10.col-md-offset-1
+    = form_for @quiz do |f|
+      = f.label :name
+      = f.text_field :name, class: "form-control"
+
+      = f.fields_for :questions do |ques|
+        = ques.label :statement
+        = ques.text_field :statement, class: "form-control"
+
+        - val = 0
+        .row
+          .col-md-3.col-md-offset-1
+            = ques.fields_for :choices do |choi|
+              = choi.label :choice
+              .row
+                .col-md-1
+                  = ques.radio_button :correct_choice_id, val, class: "input-group-addon"
+                  - val += 1
+                .col-md-10
+                  = choi.text_field :statement, class: "form-control"
+      .center
+        = f.submit class: "btn btn-primary"

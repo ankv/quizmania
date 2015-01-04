@@ -1,0 +1,14 @@
+%h1.center Profile Page
+%h2 
+  Welcome 
+  %span{ style: "color:blue"}
+    = @user.name
+%h2.center Tests Taken
+%table.table.table-hover
+  %tr
+    %th Quiz Name
+    %th Score
+  - @user.tests.each do |test|
+    %tr
+      %td= test.quiz_name
+      %td= test.score
