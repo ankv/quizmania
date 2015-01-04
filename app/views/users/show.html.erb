@@ -1,2 +1,15 @@
 <h1 class="center">Profile Page</h1>
 <h2>Welcome <span style="color:blue"><%= @user.name %> !</span><h2>
+<h2 class="center"> Test Taken</h2>
+<table class="table">
+  <tr>
+    <th>Quiz Name</th>
+    <th>Score</th>
+  </tr>
+  <% @user.tests.each do |test| %>
+  <tr>
+    <th><%=test.quiz_name%></th>
+    <th><%=test.score%></th>
+  <tr>
+  <% end %>
+</table>

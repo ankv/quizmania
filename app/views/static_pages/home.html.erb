@@ -6,7 +6,8 @@
     <% end %>
     <ol>
       <% @quiz.each do |q| %>
-        <h2> <li><%= link_to q.name, '#' %> 
+        <% test_path = 'test/' + q.id.to_s %>
+        <h2> <li><%= link_to q.name, test_path %> 
         <% if current_user && current_user.is_admin? %>
           <span style="float:right">
           <%= link_to "Delete", quiz_path(q.id), method: :delete, class: "btn btn-primary" %>
