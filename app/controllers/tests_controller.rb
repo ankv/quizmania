@@ -3,6 +3,10 @@ class TestsController < ApplicationController
 
   def new
     @quiz = Quiz.find_by(id: params[:id])
+    test = Test.find_by(user_id: session[:user_id], quiz_name: @quiz.name)
+    if test
+      redirect_to root_url
+    end
     @ques_no = 0
     @question = @quiz.questions[@ques_no]
     unset_answer
@@ -15,14 +19,14 @@ class TestsController < ApplicationController
       @test = Test.new(user_id: session[:user_id], quiz_name: @quiz.name)
       @test.score = 0
     elsif @ques_no == 4
-      @test = Test.find_by(quiz_name: @quiz.name)
+      @test = Test.find_by(user_id: session[:user_id], quiz_name: @quiz.name)
       if correct_submission?
         @test.score += 1
       end
       @test.save
       return redirect_to root_url
     else
-      @test = Test.find_by(quiz_name: @quiz.name)
+      @test = Test.find_by(user_id: session[:user_id], quiz_name: @quiz.name)
     end
     if correct_submission?
       @test.score += 1
