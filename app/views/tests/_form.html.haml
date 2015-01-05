@@ -1,19 +1,21 @@
 .row
   .col-md-10.col-md-offset-1
-    -cus_url = "/tests/" + @quiz.id.to_s
-    = form_for @quiz, url: cus_url, method: :post do |f|
-      = f.label f.object.name, class: "form-control"
-      = f.fields_for :questions do |ques|
-        = ques.label ques.object.statement, class: "form-control"
-        - val = 0
-        .row
-          .col-md-3.col-md-offset-1
-            = ques.fields_for :choices do |choi|
-              .row
-                .col-md-1
-                  = ques.radio_button :correct_choice_id, val, checked: false, class: "input-group-addon"
-                  - val += 1
-                .col-md-10
-                  = choi.label choi.object.statement, class: "form-control"
+    -sub_url = "/tests/" + @quiz.id.to_s
+    = form_for @question, url: sub_url, method: :post do |ques|
+      = hidden_field_tag :ques_no, @ques_no
+      = ques.label ques.object.statement, class: "form-control"
+      - val = 0
+      .row
+        .col-md-3.col-md-offset-1
+          = ques.fields_for :choices do |choi|
+            .row
+              .col-md-1
+                = ques.radio_button :correct_choice_id, val, checked: false, class: "input-group-addon"
+                - val += 1
+              .col-md-10
+                = choi.label choi.object.statement, class: "form-control"
       .center
-        = f.submit :Submit, class: "btn btn-primary"
+        - if @ques_no < 4
+          = ques.submit :Next, class: "btn btn-primary"
+        - else
+          = ques.submit :Submit, class: "btn btn-primary"
