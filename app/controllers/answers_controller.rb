@@ -1,10 +1,10 @@
-class TestsController < ApplicationController
+class AnswersController < ApplicationController
   before_action :logged_in
 
   def new
     @quiz = Quiz.find_by(id: params[:id])
-    test = Test.find_by(user_id: session[:user_id], quiz_name: @quiz.name)
-    if test
+    answer = Answer.find_by(user_id: session[:user_id], quiz_name: @quiz.name)
+    if answer
       redirect_to root_url
     end
     @ques_no = 0
@@ -16,22 +16,22 @@ class TestsController < ApplicationController
     @quiz = Quiz.find_by(id: params[:id])
     @ques_no = params[:ques_no].to_i
     if @ques_no == 0
-      @test = Test.new(user_id: session[:user_id], quiz_name: @quiz.name)
-      @test.score = 0
+      @answer = Answer.new(user_id: session[:user_id], quiz_name: @quiz.name)
+      @answer.score = 0
     elsif @ques_no == 4
-      @test = Test.find_by(user_id: session[:user_id], quiz_name: @quiz.name)
+      @answer = Answer.find_by(user_id: session[:user_id], quiz_name: @quiz.name)
       if correct_submission?
-        @test.score += 1
+        @answer.score += 1
       end
-      @test.save
+      @answer.save
       return redirect_to root_url
     else
-      @test = Test.find_by(user_id: session[:user_id], quiz_name: @quiz.name)
+      @answer = Answer.find_by(user_id: session[:user_id], quiz_name: @quiz.name)
     end
     if correct_submission?
-      @test.score += 1
+      @answer.score += 1
     end
-    @test.save
+    @answer.save
     @ques_no += 1
     @question = @quiz.questions[@ques_no]
     unset_answer

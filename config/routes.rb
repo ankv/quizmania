@@ -5,8 +5,8 @@ Rails.application.routes.draw do
   get 'login' => 'sessions#new'
   post 'login' => 'sessions#create'
   delete 'logout' => 'sessions#destroy'
-  get 'test/:id' => 'tests#new'
-  post 'tests/:id' => 'tests#create'
+  get 'answers/:id' => 'answers#new'
+  post 'answers/:id' => 'answers#create'
 
   resources :users
   resources :quizzes
