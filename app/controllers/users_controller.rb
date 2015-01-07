@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :require_login, only: [:edit, :update, :show]
 
   def show
     @user = User.find(params[:id])
@@ -30,5 +31,11 @@ class UsersController < ApplicationController
   def users_params
     params.require(:user).permit(:name, :email, :password,
                                 :password_confirmation)
+  end
+
+  def require_login
+    unless logged_in? and current_user.id.eql?(params[:id].to_i)
+      redirect_to root_url
+    end
   end
 end

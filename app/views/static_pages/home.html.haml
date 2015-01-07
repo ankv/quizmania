@@ -16,14 +16,15 @@
           -if current_user && current_user.is_admin?
             %th= ""
         -@quiz.each do |q|
-          -test_path = 'answers/' + q.id.to_s
-          %tr
-            %td
-              = quiz_no
-            %td
-              =link_to q.name, test_path
-            -if current_user && current_user.is_admin?
+          -if q.available
+            -test_path = 'answers/' + q.id.to_s
+            %tr
               %td
-                =link_to "Delete", quiz_path(q.id), method: :delete, class: "btn btn-primary"
-                =link_to "Edit", edit_quiz_path(q.id), class: "btn btn-primary"
-          - quiz_no += 1
+                = quiz_no
+              %td
+                =link_to q.name, test_path
+              -if current_user && current_user.is_admin?
+                %td
+                  =link_to "Delete", quiz_path(q.id), method: :delete, class: "btn btn-primary"
+                  =link_to "Edit", edit_quiz_path(q.id), class: "btn btn-primary"
+            - quiz_no += 1

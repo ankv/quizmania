@@ -11,14 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150107062938) do
+ActiveRecord::Schema.define(version: 20150107081501) do
 
   create_table "answers", force: true do |t|
-    t.string   "quiz_name"
     t.integer  "user_id"
     t.integer  "score"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "quiz_id"
   end
 
   create_table "choices", force: true do |t|
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20150107062938) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "available",  default: true
   end
 
   create_table "users", force: true do |t|

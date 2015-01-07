@@ -29,7 +29,8 @@ class QuizzesController < ApplicationController
 
   def destroy
     quiz = Quiz.find_by(id: params[:id])
-    quiz.destroy
+    quiz.available = false
+    quiz.save
     redirect_to root_url
   end
 

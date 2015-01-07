@@ -2,51 +2,33 @@ class AnswersController < ApplicationController
   before_action :logged_in
 
   def new
-    @quiz = Quiz.find_by(id: params[:id])
-    answer = Answer.find_by(user_id: session[:user_id], quiz_name: @quiz.name)
+    quiz = Quiz.find_by(id: params[:id])
+    answer = Answer.find_by(user_id: current_user.id, quiz_id: quiz.id)
     if answer
       redirect_to root_url
     end
-    @ques_no = 0
-    @question = @quiz.questions[@ques_no]
-    unset_answer
+    session[:ques_no] = 0
+    session[:score] = 0
+    session[:quiz_id] = params[:id]
+    @question = quiz.questions[session[:ques_no]]
   end
 
   def create
-    @quiz = Quiz.find_by(id: params[:id])
-    @ques_no = params[:ques_no].to_i
-    if @ques_no == 0
-      @answer = Answer.new(user_id: session[:user_id], quiz_name: @quiz.name)
-      @answer.score = 0
-    elsif @ques_no == 4
-      @answer = Answer.find_by(user_id: session[:user_id], quiz_name: @quiz.name)
-      if correct_submission?
-        @answer.score += 1
-      end
-      @answer.save
+    quiz = Quiz.find_by(id: session[:quiz_id])
+    if session[:ques_no] == 4
+      ans = Answer.create(user_id: current_user.id, quiz_id: session[:quiz_id],
+                          score: session[:score])
+      [:ques_no, :quiz_id, :score].each { |k| session.delete(k) }
       return redirect_to root_url
-    else
-      @answer = Answer.find_by(user_id: session[:user_id], quiz_name: @quiz.name)
     end
-    if correct_submission?
-      @answer.score += 1
-    end
-    @answer.save
-    @ques_no += 1
-    @question = @quiz.questions[@ques_no]
-    unset_answer
+    session[:score] += quiz.questions[session[:ques_no]].correct_answer(
+                      params[:question][:correct_choice_id].to_i )
+    session[:ques_no] += 1
+    @question = quiz.questions[session[:ques_no]]
     render 'new'
   end
 
   private
-
-  def correct_submission?
-    if params[:question][:correct_choice_id].to_i == @quiz.questions[@ques_no].correct_choice_id
-      true
-    else
-      false
-    end
-  end
 
   def logged_in
     unless logged_in?
@@ -54,19 +36,4 @@ class AnswersController < ApplicationController
     end
   end
 
-  def unset_answer
-    @question.correct_choice_id = nil
-  end
-
-  def calculate_score
-    score = 0
-    ques_no = 0
-    @quiz.questions.each do |ques|
-      if ques.correct_choice_id == params[:quiz][:questions_attributes][ques_no.to_s][:correct_choice_id].to_i
-        score += 1
-      end
-      ques_no += 1
-    end
-    score
-  end
 end
