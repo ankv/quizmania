@@ -1,17 +1,24 @@
-.row
-  .col-md-10.col-md-offset-1
-    -sub_url = "/answers/" + @question.quiz_id.to_s
-    = form_for @question, url: sub_url, method: :post do |ques|
-      = ques.label ques.object.statement, class: "form-control"
-      - val = 0
-      .row
-        .col-md-3.col-md-offset-1
-          = ques.fields_for :choices do |choi|
-            .row
-              .col-md-1
-                = ques.radio_button :correct_choice_id, val, checked: false, class: "input-group-addon"
-                - val += 1
-              .col-md-10
-                = choi.label choi.object.statement, class: "form-control"
-      .center
-        = ques.submit :Submit, class: "btn btn-primary"
+.well.text-info
+  .row
+    .col-md-10.col-md-offset-1
+      -sub_url = "/answers/" + @question.quiz_id.to_s
+      = form_for @question, url: sub_url, method: :post do |ques|
+        %h3
+          = ques.label ques.object.statement
+        - val = 0
+        .row
+          .col-md-11.col-md-offset-1
+            = ques.fields_for :choices do |choi|
+              .row
+                .col-md-1
+                  %h4
+                    = ques.radio_button :correct_choice_id, val, checked: false, class: "choices"
+                  - val += 1
+                .col-md-10
+                  %h4
+                    = choi.label choi.object.statement
+        .center
+          -if session[:ques_no].eql?(4)
+            = ques.submit :Submit, class: "btn btn-primary", id: "submit_button"
+          -else
+            = ques.submit :Next, class: "btn btn-primary", id: "submit_button"

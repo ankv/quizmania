@@ -8,6 +8,7 @@ class SessionsController < ApplicationController
       log_in user
       redirect_to user
     else
+      flash.now[:log_in_error] = "Invalid email/password"
       render 'new'
     end
   end

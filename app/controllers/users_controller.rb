@@ -21,8 +21,15 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(users_params)
-    if @user.save
+    sameuser = User.find_by(email: @user.email)
+    if sameuser
+      flash.now[:email_exist] = "Email already exist"
+      render 'new'
+    elsif @user.save
+      log_in @user
       redirect_to @user
+    else
+      render 'new'
     end
   end
 

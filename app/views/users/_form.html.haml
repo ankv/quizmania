@@ -1,5 +1,11 @@
 .row
   .col-md-4.col-md-offset-4
+    -if @user.errors.messages.any? or flash[:email_exist]
+      .alert.alert-danger.center
+        = flash[:email_exist]
+        -@user.errors.full_messages.each do |message|
+          = message
+          %br
     .jumbotron
       = form_for @user do |f|
         = f.label :name 

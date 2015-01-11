@@ -7,12 +7,12 @@
 %table.table.table-hover
   %tr
     %th #
-    %th Quiz Id
+    %th Quiz Name
     %th Score
   -cnt = 1
   -@user.answers.each do |test|
     %tr
       %td= cnt
-      %td= test.quiz_id
+      %td= test.quiz_name
       %td= test.score
       -cnt+=1
