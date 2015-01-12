@@ -2,9 +2,12 @@ class QuizzesController < ApplicationController
   before_action :should_be_admin
 
   def create
-    quiz = Quiz.new(quiz_params)
-    quiz.save
-    redirect_to root_url
+    @quiz = Quiz.new(quiz_params)
+    if @quiz.save
+     return redirect_to root_url
+    else
+      render 'edit'
+    end
   end
 
   def new
@@ -23,8 +26,11 @@ class QuizzesController < ApplicationController
 
   def update
     @quiz = Quiz.find_by(id: params[:id])
-    @quiz.update(quiz_params)
-    redirect_to root_url
+    if @quiz.update(quiz_params)
+     return redirect_to root_url
+    else 
+      render 'edit'
+    end
   end
 
   def destroy

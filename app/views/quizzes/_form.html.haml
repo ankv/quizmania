@@ -3,10 +3,19 @@
     = form_for @quiz do |f|
       = f.label :name
       = f.text_field :name, class: "form-control"
+      -if f.object.errors.messages[:name].any?
+        .alert.alert-danger
+          =f.object.errors.messages[:name].first
 
       = f.fields_for :questions do |ques|
         = ques.label :statement
         = ques.text_field :statement, class: "form-control"
+        -if ques.object.errors[:statement].any?
+          .alert.alert-danger
+            =ques.object.errors[:statement].first
+        -if ques.object.errors[:correct_choice_id].any?
+          .alert.alert-danger
+            = "correct choice " + ques.object.errors[:correct_choice_id].first.to_s
 
         - val = 0
         .row
@@ -15,9 +24,12 @@
               = choi.label :choice
               .row
                 .col-md-1
-                  = ques.radio_button :correct_choice_id, val, class: "input-group-addon"
+                  = ques.radio_button :correct_choice_id, val
                   - val += 1
                 .col-md-10
                   = choi.text_field :statement, class: "form-control"
+                  -if choi.object.errors[:statement].any?
+                    .alert.alert-danger
+                      = choi.object.errors[:statement].first
       .center
         = f.submit class: "btn btn-primary"
