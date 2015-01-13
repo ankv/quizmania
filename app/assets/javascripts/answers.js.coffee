@@ -13,4 +13,6 @@ onready = ->
   $(".choices").click(enable_submit_button)
 
 $(document).on "page:change", ->
+  console.log('inside page change')
   onready()
+

@@ -25,7 +25,10 @@
               %td
                 = quiz_no
               %td
-                =link_to q.name, test_path
+                - if current_user and @solved_quiz[q.id]
+                  = link_to q.name, test_path, class: "solved-quiz"
+                - else
+                  =link_to q.name, test_path
               -if current_user && current_user.is_admin?
                 %td
                   =link_to "Delete", quiz_path(q.id), method: :delete, class: "btn btn-primary"

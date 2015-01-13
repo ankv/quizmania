@@ -11,6 +11,14 @@ body {
   text-align: center;
 }
 
+.solved-quiz {
+  color: green;
+  &:hover {
+    color: green;
+    text-decoration: none;
+  }
+}
+
 #logo {
   color: white;
   text-transform: uppercase;

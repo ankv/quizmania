@@ -1,7 +1,11 @@
 class AnswersController < ApplicationController
   before_action :should_be_logged_in
-
+  
   def new
+    if session[:ques_no]
+      [:ques_no, :score, :quiz_id].each { |k| session.delete(k) }
+      return redirect_to root_path
+    end
     quiz = Quiz.find_by(id: params[:id])
     answer = Answer.find_by(user_id: current_user.id, quiz_id: quiz.id)
     if answer
