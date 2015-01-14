@@ -2,9 +2,9 @@ class QuizzesController < ApplicationController
   before_action :should_be_admin
 
   def create
-    @quiz = Quiz.new(quiz_params)
+    @quiz = Quiz.new(new_quiz_params)
     if @quiz.save
-     return redirect_to root_url
+      return redirect_to root_url
     else
       render 'edit'
     end
@@ -22,10 +22,16 @@ class QuizzesController < ApplicationController
 
   def edit
     @quiz = Quiz.find_by(id: params[:id])
+    if @quiz == nil
+      redirect_to root_url
+    end
   end
 
   def update
     @quiz = Quiz.find_by(id: params[:id])
+    if @quiz == nil
+      return redirect_to root_url
+    end
     if @quiz.update(quiz_params)
      return redirect_to root_url
     else 
@@ -35,6 +41,9 @@ class QuizzesController < ApplicationController
 
   def destroy
     quiz = Quiz.find_by(id: params[:id])
+    if quiz == nil
+      return redirect_to root_url
+    end
     quiz.available = false
     quiz.save
     redirect_to root_url
@@ -45,6 +54,11 @@ class QuizzesController < ApplicationController
   def quiz_params
     params.require(:quiz).permit(:id, :name, questions_attributes: [:id, :quiz_id, :statement,
                                   :correct_choice_id, choices_attributes: [:id, :question_id, :statement] ])
+  end
+
+  def new_quiz_params
+    params.require(:quiz).permit(:name, questions_attributes: [:quiz_id, :statement,
+                                  :correct_choice_id, choices_attributes: [:question_id, :statement] ])
   end
 
   def should_be_admin

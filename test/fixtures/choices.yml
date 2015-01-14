@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  statement: MyString
-  question_id: 1
-
-two:
-  statement: MyString
-  question_id: 1
+<% 5.times do |q| %>
+choice_for_<%= q %>:
+  <% 3.times do |c| %>
+  statement: <%= "choice #{c}"%>
+  question_id: <%= q %>
+  <% end %>
+<% end %>

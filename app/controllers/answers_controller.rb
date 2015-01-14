@@ -2,7 +2,7 @@ class AnswersController < ApplicationController
   before_action :should_be_logged_in
   
   def new
-    if session[:ques_no]
+    if session[:ques_no] and !session[:ques_no].eql?(0)
       [:ques_no, :score, :quiz_id].each { |k| session.delete(k) }
       return redirect_to root_path
     end
@@ -20,6 +20,8 @@ class AnswersController < ApplicationController
   def create
     quiz = Quiz.find_by(id: session[:quiz_id])
     if session[:ques_no] == 4
+      session[:score] += quiz.questions[session[:ques_no]].correct_answer(
+                      params[:question][:correct_choice_id].to_i )
       ans = Answer.new(user_id: current_user.id, quiz_id: session[:quiz_id],
                           score: session[:score])
       [:ques_no, :quiz_id, :score].each { |k| session.delete(k) }

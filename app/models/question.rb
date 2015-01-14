@@ -1,6 +1,6 @@
 class Question < ActiveRecord::Base
-  validates :correct_choice_id, presence: true
-  validates :statement, presence: true
+  validates :correct_choice_id, presence: true, inclusion: { in: (0..5)}
+  validates :statement, presence: true, length: {maximum: 255}
   has_many :choices, dependent: :destroy
   belongs_to :quiz
 
@@ -8,9 +8,9 @@ class Question < ActiveRecord::Base
 
   def correct_answer( ans )
     if correct_choice_id == ans
-      1
+      return 1
     else
-      0
+      return 0
     end
   end
 

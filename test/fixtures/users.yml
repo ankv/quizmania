@@ -2,10 +2,8 @@
 
 one:
   name: MyString
-  email: MyString
-  password_digest: MyString
+  email: one@mail.com
 
 two:
   name: MyString
-  email: MyString
-  password_digest: MyString
+  email: two@mail.com
