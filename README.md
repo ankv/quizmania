@@ -25,5 +25,6 @@ Things you may want to cover:
 
 
 Please feel free to use a different markup language if you do not plan to run
+
 [![Code Climate](https://codeclimate.com/github/ankv/quizmania/badges/gpa.svg)](https://codeclimate.com/github/ankv/quizmania)
 [![Test Coverage](https://codeclimate.com/github/ankv/quizmania/badges/coverage.svg)](https://codeclimate.com/github/ankv/quizmania)
