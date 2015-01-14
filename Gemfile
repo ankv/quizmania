@@ -17,6 +17,7 @@ gem 'bootstrap-sass', '3.2.0.0'
 gem 'bcrypt', '3.1.7'
 gem 'haml'
 gem 'devise'
+gem "codeclimate-test-reporter", group: :test, require: nil
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
